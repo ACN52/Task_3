@@ -23,29 +23,32 @@ fun main() {
     var summaBuy = 0.0
     var itogSumma = 0.0
 
-    val scanner = Scanner(System.`in`)
+    var input = ""
     // -------------------------
 
     // Основной блок программы
     // -------------------------
     print("Введите сумму покупки: ")
+    input = readln()
 
-    summaBuy = scanner.nextDouble()
+    if (input.isNotEmpty()) {
+        summaBuy = input.toDouble()
+        if (summaBuy <= 1000.0) {
+            itogSumma = summaBuy
+        } else if (summaBuy in 1001.0..10000.0) {
+            itogSumma = summaBuy - discount100  // для обычных покупателей
+            if (constUsers == true) itogSumma = itogSumma - (itogSumma * dopDiscount)  // для постоянных покупателей
+        } else if (summaBuy >= 10001.0) {
+            itogSumma = summaBuy - (summaBuy * discount)  // для обычных покупателей
+            if (constUsers == true) itogSumma = itogSumma - (itogSumma * dopDiscount)  // для постоянных покупателей
+        }
 
-    if (summaBuy <= 1000.0) {
-        itogSumma = summaBuy
-    } else if (summaBuy in 1001.0..10000.0) {
-        itogSumma = summaBuy - discount100
-    } else if (summaBuy >= 10001.0) {
-        itogSumma = summaBuy - (summaBuy * discount)  // для обычных покупателей
-        if (constUsers == true) itogSumma = itogSumma - (itogSumma * dopDiscount)  // для постоянных покупателей
+        val roundItogSumma = "%.2f".format(itogSumma) // Округляем результат до двух знаков после запятой
+        print("Итоговая стоимость покупки: $roundItogSumma руб.")
+
     } else {
-        print("Проверьте введенную сумму !")
+         print("Проверьте ввод данных !")
     }
-
-    // Округляем результат до двух знаков после запятой
-    val roundItogSumma = "%.2f".format(itogSumma)
-    print("Итоговая стоимость покупки: $roundItogSumma руб.")
     // -------------------------
 
 }
